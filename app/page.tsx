@@ -6,19 +6,29 @@ export default function Home() {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-[radial-gradient(at_0%_0%,color-mix(in_oklch,var(--primary),transparent_85%)_0px,transparent_50%),radial-gradient(at_100%_100%,color-mix(in_oklch,oklch(0.7_0.15_165),transparent_88%)_0px,transparent_50%)] p-6">
-      <Card className="w-full max-w-xl">
-        <CardHeader>
-          <Badge variant="secondary" className="mb-2 w-fit uppercase tracking-wide">
+    <div className="flex flex-1 items-center justify-center bg-[radial-gradient(at_0%_0%,rgba(99,102,241,0.15)_0px,transparent_50%),radial-gradient(at_100%_100%,rgba(16,185,129,0.12)_0px,transparent_50%)] p-6">
+      <Card className="w-full max-w-160 gap-8 rounded-[20px] border border-white/8 ring-0 bg-card [--card-spacing:--spacing(10)] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),0_0_30px_0_rgba(99,102,241,0.25)] backdrop-blur-lg">
+        <CardHeader className="gap-0">
+          <Badge
+            variant="outline"
+            className="mb-4 h-auto w-fit gap-2 rounded-full border-primary/30 bg-primary/12 px-3 py-[0.35rem] text-xs font-semibold uppercase tracking-wider text-[#818cf8]"
+          >
+            <span className="size-1.5 rounded-full bg-[#818cf8] shadow-[0_0_8px_#818cf8]" />
             Doctor Appointment Auth
           </Badge>
-          <CardTitle className="text-2xl">Google ID Token Generator</CardTitle>
-          <CardDescription>
+          <CardTitle className="mb-2 text-[1.75rem] font-bold leading-snug tracking-tight text-white">
+            Google ID Token Generator
+          </CardTitle>
+          <CardDescription className="text-[0.925rem] leading-normal text-muted-foreground">
             Sign in with Google to generate a signed idToken, then verify it against the
-            backend&apos;s <code className="rounded bg-muted px-1.5 py-0.5">POST /api/v1/auth/google</code> endpoint.
+            backend&apos;s{" "}
+            <code className="rounded-[6px] bg-white/8 px-[0.4rem] py-[0.15rem] font-mono text-[0.85em] text-[#e0e7ff]">
+              POST /api/v1/auth/google
+            </code>{" "}
+            endpoint.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-6">
+        <CardContent className="flex flex-col gap-0">
           {clientId ? (
             <GoogleSignInCard clientId={clientId} />
           ) : (

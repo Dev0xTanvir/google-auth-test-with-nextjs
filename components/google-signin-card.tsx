@@ -13,35 +13,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
-type GoogleCredentialResponse = {
-  credential: string;
-};
-
-declare global {
-  interface Window {
-    google?: {
-      accounts: {
-        id: {
-          initialize: (config: {
-            client_id: string;
-            callback: (response: GoogleCredentialResponse) => void;
-          }) => void;
-          renderButton: (
-            parent: HTMLElement,
-            options: {
-              type?: "standard" | "icon";
-              shape?: "rectangular" | "pill" | "circle" | "square";
-              theme?: "outline" | "filled_blue" | "filled_black";
-              size?: "large" | "medium" | "small";
-            },
-          ) => void;
-        };
-      };
-    };
-  }
-}
-
 const initialActionState = { status: "idle" as const };
+
+const btnClass =
+  "h-auto gap-2 rounded-[10px] px-5 py-[0.65rem] text-sm font-semibold shadow-[0_4px_14px_rgba(99,102,241,0.35)] transition-all hover:-translate-y-px hover:bg-[#4f46e5] hover:shadow-[0_6px_20px_rgba(99,102,241,0.45)] active:translate-y-0";
 
 function CopyableField({ label, value }: { label: string; value: string }) {
   const copy = async () => {
@@ -111,13 +86,15 @@ export function GoogleSignInCard({ clientId }: { clientId: string }) {
         onReady={() => setScriptReady(true)}
       />
 
-      <div className="flex min-h-24 items-center justify-center rounded-xl border border-dashed border-border p-6">
+      <div className="mb-8 flex min-h-[90px] items-center justify-center rounded-[14px] border border-dashed border-white/10 bg-white/[0.03] px-6 py-7 transition-colors duration-200 hover:border-primary/40">
         <div ref={buttonRef} />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <Label htmlFor="tokenBox">Generated ID Token</Label>
+          <Label htmlFor="tokenBox" className="text-sm font-semibold text-[#d1d5db]">
+            Generated ID Token
+          </Label>
           <span className="text-xs font-medium text-muted-foreground">
             {idToken ? "Token generated successfully!" : "Waiting for sign-in..."}
           </span>
@@ -127,21 +104,25 @@ export function GoogleSignInCard({ clientId }: { clientId: string }) {
           readOnly
           value={idToken}
           placeholder="Sign in with Google above to generate a token..."
-          className="min-h-32 font-mono text-xs text-sky-600 dark:text-sky-400"
+          className="field-sizing-fixed h-[140px] resize-y rounded-[12px] bg-[#0d1322] px-4 py-4 font-mono text-[0.825rem] leading-normal text-sky-400 placeholder:text-[#4b5563] focus-visible:border-primary focus-visible:ring-primary/15 dark:bg-[#0d1322] md:text-[0.825rem]"
         />
       </div>
 
-      <div className="flex items-center justify-end">
-        <Button type="button" variant="outline" onClick={copyIdToken}>
+      <div className="mt-4 flex items-center justify-end">
+        <Button type="button" onClick={copyIdToken} className={btnClass}>
           <ClipboardCopy /> Copy Token
         </Button>
       </div>
 
-      <Separator />
+      <Separator className="my-8" />
 
       <form action={formAction} className="flex flex-col gap-4">
         <input type="hidden" name="idToken" value={idToken} readOnly />
-        <Button type="submit" disabled={!idToken || isPending} className="self-end">
+        <Button
+          type="submit"
+          disabled={!idToken || isPending}
+          className={`self-end ${btnClass}`}
+        >
           {isPending ? <Loader2 className="animate-spin" /> : <ShieldCheck />}
           Verify with Backend
         </Button>
