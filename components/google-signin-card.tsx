@@ -1,17 +1,17 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { ClipboardCopy, Loader2, ShieldCheck } from "lucide-react";
 import Script from "next/script";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Loader2, ClipboardCopy, ShieldCheck } from "lucide-react";
 
 import { verifyGoogleIdToken } from "@/app/actions";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Textarea } from "@/components/ui/textarea";
 
 const initialActionState = { status: "idle" as const };
 
@@ -131,14 +131,14 @@ export function GoogleSignInCard({ clientId }: { clientId: string }) {
           <div className="flex flex-col gap-4">
             <Alert>
               <ShieldCheck />
-              <AlertTitle>{state.data.message}</AlertTitle>
+              <AlertTitle>{state?.data?.message}</AlertTitle>
               <AlertDescription>
-                Signed in as {state.data.user.name} ({state.data.user.email}) &middot;{" "}
-                <Badge variant="secondary">{state.data.user.role}</Badge>
+                Signed in as {state?.data?.user?.name} ({state?.data?.user?.email}) &middot;{" "}
+                <Badge variant="secondary">{state?.data?.user?.role}</Badge>
               </AlertDescription>
             </Alert>
-            <CopyableField label="Access Token" value={state.data.accessToken} />
-            <CopyableField label="Refresh Token" value={state.data.refreshToken} />
+            <CopyableField label="Access Token" value={state?.data?.accessToken} />
+            <CopyableField label="Refresh Token" value={state?.data?.refreshToken} />
           </div>
         )}
 

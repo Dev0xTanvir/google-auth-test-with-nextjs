@@ -1,12 +1,12 @@
 "use client";
 
-import { startTransition, useActionState, useEffect, useRef, useState } from "react";
-import Script from "next/script";
-import { toast } from "sonner";
 import { Loader2, ShieldCheck } from "lucide-react";
+import Script from "next/script";
+import { startTransition, useActionState, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { loginWithGoogle } from "@/app/login/actions";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 
 const initialActionState = { status: "idle" as const };
@@ -73,8 +73,8 @@ export function GoogleAutoLoginCard({ clientId }: { clientId: string }) {
           <ShieldCheck />
           <AlertTitle>{state.data.message}</AlertTitle>
           <AlertDescription>
-            Signed in as {state.data.user.name} ({state.data.user.email}) &middot;{" "}
-            <Badge variant="secondary">{state.data.user.role}</Badge>
+            Signed in as {state.data?.user?.name} ({state.data?.user?.email}) &middot;{" "}
+            <Badge variant="secondary">{state.data?.user?.role}</Badge>
             <br />
             Session cookies have been set.
           </AlertDescription>
