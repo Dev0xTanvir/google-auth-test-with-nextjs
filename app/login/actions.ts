@@ -15,7 +15,7 @@ export async function loginWithGoogle(
     };
   }
 
-  const backendUrl = process.env.BACKEND_URL ?? "http://localhost:5000";
+  const backendUrl = process.env.BACKEND_URL ?? "http://localhost:8000";
 
   let res: Response;
   try {
